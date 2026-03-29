@@ -1,10 +1,19 @@
+from flask import Flask
+import time
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Local App is Running!"
+
 @app.route('/stress')
 def stress():
-    # Simulating a heavy scientific computing workload (Primality Testing)
-    timeout = time.time() + 20
-    num = 100000
-    while time.time() < timeout:
-        # Check if the number is prime to burn CPU cycles
-        is_prime = all(num % i != 0 for i in range(2, int(num**0.5) + 1))
-        num += 1
-    return "Prime Generation CPU Stress test completed!"
+    print("Stress test started...")
+    start_time = time.time()
+    while time.time() - start_time < 30:
+        _ = 12345 * 12345
+    return "Stress test completed on Local VM!"
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
